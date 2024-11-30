@@ -4,8 +4,7 @@ import logger from "./utilities/pino.logger";
 
 dotenv.config();
 
-const PORT = process.env.APP_PORT || 8090;
-
+const PORT = /*  process.env.APP_PORT || */ 8080;
 
 app.listen(PORT, () => {
   logger.info(`Servidor corriendo en el puerto: ${PORT} ${process.env.NODE_ENV}`);

@@ -152,8 +152,7 @@ export class ArticleController {
   }
 
   static async updateByID(req: Request, res: Response, next: NextFunction) {
-    // Obtener el ID desde el cuerpo de la solicitud
-    const { ID, ...updateData } = req.body; // El ID estará en el cuerpo de la solicitud
+    const { ID, ...updateData } = req.body;
 
     if (!ID) {
       return next(
@@ -165,6 +164,8 @@ export class ArticleController {
         )
       );
     }
+
+    updateData.FECHA_MODIFICACION = new Date().toISOString().slice(0, 19).replace("T", " ");
 
     // Validar que se envíen datos para actualizar
     if (!updateData || Object.keys(updateData).length === 0) {
@@ -179,7 +180,7 @@ export class ArticleController {
     }
 
     try {
-      const result: any = await ArticleModel.updateByID(ID, updateData); // Pasa el ID y los datos a actualizar
+      const result: any = await ArticleModel.updateByID(ID, updateData);
 
       if (result.affectedRows === 0) {
         return next(
@@ -194,7 +195,7 @@ export class ArticleController {
 
       res.status(200).json({
         message: "Producto actualizado correctamente",
-        data: { ...updateData },
+        data: updateData,
       });
     } catch (error: any) {
       return next(
@@ -207,4 +208,6 @@ export class ArticleController {
       );
     }
   }
+
+
 }

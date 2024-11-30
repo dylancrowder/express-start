@@ -7,7 +7,7 @@
     "build": "tsc",
     "watch": "tsc --watch",
     "test": "cross-env NODE_ENV=test jest --detectOpenHandles --verbose",
-    "inspect": "node --inspect -r ts-node/register src/server.ts"
+    "inspect": "cross-env NODE_ENV=development node --inspect -r ts-node/register src/server.ts"
   },
   "dependencies": {
     "body-parser": "^1.20.3",

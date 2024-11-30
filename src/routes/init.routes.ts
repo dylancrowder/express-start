@@ -13,7 +13,7 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
       const currentTime = result[0].currentTime;
       res
         .status(200)
-        .json({ currentTime, message: "argentina le gano  a bolivia ayer" });
+        .json({ currentTime, message: "Hola me llamo Dylan!" });
     }
   } catch (error: any) {
     return next(

@@ -7,11 +7,11 @@ services:
     ports:
       - "8090:8090"
     environment:
-      DB_HOST: ${DB_HOST}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      DB_PORT: "${MYSQL_PORT}"
+      DB_HOST: my_sql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: "12345"
+      MYSQL_DATABASE: db
+      DB_PORT: "3306"
     env_file:
       - .env
     volumes:
@@ -25,12 +25,10 @@ services:
     image: mysql:8.0
     container_name: my_mysql
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: "12345"
+      MYSQL_DATABASE: db
     ports:
-      - "${MYSQL_PORT}:3306"
+      - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
@@ -42,5 +40,5 @@ networks:
     driver: bridge
 
 volumes:
-  mysql_data: # Volumen para los datos de MySQL
-  node_modules_cache: # Volumen para node_modules
+  mysql_data: 
+  node_modules_cache:

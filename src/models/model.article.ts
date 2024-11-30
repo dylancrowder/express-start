@@ -44,6 +44,7 @@ export class ArticleModel {
 
   // Eliminar
   static async deleteByID(id: number) {
+    console.log("este es el id",id);
     try {
       const [result]: any = await connection.query(
         "DELETE FROM ARTICLE WHERE ID = ?",
