@@ -1,0 +1,64 @@
+version: "3.8"
+
+services:
+  # Servicio de la aplicación de producción
+  app:
+    build: .
+    container_name: my_node_app
+    ports:
+      - "8090:8090"
+    environment:
+      DB_HOST: my_sql  # Aquí se conecta a la base de datos real de producción
+      MYSQL_USER: root
+      MYSQL_PASSWORD: "12345"
+      MYSQL_DATABASE: db
+      DB_PORT: "3306"
+    env_file:
+      - .env
+    volumes:
+      - ./:/myapp
+    depends_on:
+      - db  # La aplicación depende de la base de datos de producción
+    networks:
+      - mynetwork  # Red para producción
+
+  # Servicio de base de datos de producción
+  db:
+    image: mysql:8.0
+    container_name: my_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "12345"
+      MYSQL_DATABASE: db
+    ports:
+      - "3307:3306"  # El puerto de la base de datos de producción es 3307
+    volumes:
+      - mysql_data:/var/lib/mysql  # Volumen persistente de datos de producción
+    networks:
+      - mynetwork  # Red para producción
+    restart: always
+
+  # Servicio de base de datos de pruebas
+  mysql_test:
+    image: mysql:8.0
+    container_name: mysql_db_test
+    environment:
+      MYSQL_ROOT_PASSWORD: "12345"
+      MYSQL_DATABASE: db_test  # Base de datos separada para pruebas
+    ports:
+      - "3309:3306"  # El puerto de la base de datos de pruebas es 3309
+    volumes:
+      - mysql_data_test:/var/lib/mysql  # Volumen persistente de datos de prueba
+    networks:
+      - test_network  # Red para pruebas
+
+networks:
+  mynetwork:
+    driver: bridge  # Red para la base de datos y la app de producción
+
+  test_network:
+    driver: bridge  # Red separada para las pruebas
+
+volumes:
+  mysql_data: {}  # Volumen persistente para la base de datos de producción
+  mysql_data_test: {}  # Volumen persistente para la base de datos de prueba
+  node_modules_cache: {}  # Para caché de módulos node

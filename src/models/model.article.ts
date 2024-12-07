@@ -44,19 +44,19 @@ export class ArticleModel {
 
   // Eliminar
   static async deleteByID(id: number) {
-    console.log("este es el id",id);
     try {
       const [result]: any = await connection.query(
         "DELETE FROM ARTICLE WHERE ID = ?",
         [id]
       );
-
+  
       return result;
     } catch (error: any) {
       logger.error(`Error al eliminar un artículo: ${error.message}`);
-      throw new Error(`Error al buscar un artículo: ${error}`);
+      throw new Error(`Error al eliminar un artículo: ${error}`);
     }
   }
+  
 
   // Actualizar
   static async updateByID(id: string, updateData: Record<string, any>) {
@@ -74,7 +74,7 @@ export class ArticleModel {
       // Ejecutar la consulta
       const [result]: any = await connection.query(
         `UPDATE ARTICLE SET ${fields} WHERE ID = ?`,
-        [...values, id] // Incluimos el ID al final
+        [...values, id]
       );
   
       return result;

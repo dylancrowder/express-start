@@ -136,9 +136,20 @@ export class ArticleController {
 
     try {
       const result: any = await ArticleModel.deleteByID(id);
-      //tengo que validar la emilinacion
+      console.log("este es el resultado", result);
 
-      res.status(201).json(result);
+      if (result.affectedRows === 0) {
+        return next(
+          new AppError(
+            "NO_EXISTE",
+            404,
+            `${error}`,
+            "El producto no existe"
+          )
+        );
+      }
+
+      res.status(201).json(result); // Solo llegamos aquí si result.affectedRows > 0
     } catch (error: any) {
       return next(
         new AppError(
@@ -150,6 +161,7 @@ export class ArticleController {
       );
     }
   }
+
 
   static async updateByID(req: Request, res: Response, next: NextFunction) {
     const { ID, ...updateData } = req.body;

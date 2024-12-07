@@ -9,7 +9,7 @@ jest.mock("../models/model.article", () => ({
 }));
 
 afterEach(async () => {
-  await connection.query("DELETE FROM articles");
+  await connection.query("DELETE FROM ARTICLE");
 });
 
 describe("Article Controller", () => {
