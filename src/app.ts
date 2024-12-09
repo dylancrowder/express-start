@@ -35,8 +35,6 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 // Manejo de rutas no encontradas
 app.use(errorRoute);
 
-
-
 // Middleware de manejo de errores
 app.use(errorHandler);
 export default app;
