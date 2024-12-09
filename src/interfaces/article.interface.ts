@@ -1,8 +1,4 @@
-//(PK)
-// Nombre
-// Fecha de modificación
-// Marca
-// Estado de activación.
+
 
 export interface Article {
   ID: number;
