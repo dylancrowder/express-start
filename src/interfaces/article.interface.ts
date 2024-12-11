@@ -1,5 +1,5 @@
 
-
+//tipado
 export interface Article {
   ID: number;
   NOMBRE: string;
