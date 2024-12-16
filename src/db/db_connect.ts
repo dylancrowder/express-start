@@ -46,7 +46,7 @@ const configProd = {
   database: process.env.PROD_DB_NAME,
 };
 
-const enviroment = process.env.NODE_ENV;
+const enviroment = "test"
 
 let selectedConfig;
 
