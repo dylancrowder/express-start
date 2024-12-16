@@ -13,11 +13,7 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
       const currentTime = result[0].currentTime;
       res
         .status(200)
-<<<<<<< HEAD
         .json({ currentTime, message: "hola, bienvenido al backend con node.js1ddd1" });
-=======
-        .json({ currentTime, message: "Bienvenido a la API CRUD " });
->>>>>>> cb72d2734b2b194dc0e47240044ea2e5a58be51a
     }
   } catch (error: any) {
     return next(
