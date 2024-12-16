@@ -7,7 +7,7 @@ dotenv.config();
 // Configuración de la base de datos usando variables de entorno
 const configTest = {
   host: "localhost",
-  port: 3309, 
+  port: 3309,  // Asegúrate de usar el puerto correcto (3309)
   user: "root",
   password: "12345",
   database: "db",
@@ -46,7 +46,7 @@ const configProd = {
   database: process.env.PROD_DB_NAME,
 };
 
-const enviroment = "test"
+const enviroment = process.env.NODE_ENV;
 
 let selectedConfig;
 
@@ -63,13 +63,13 @@ if (enviroment === "test") {
 // Si no se seleccionó ninguna configuración, puedes hacer un chequeo
 if (!selectedConfig) {
   console.log("No se ha configurado correctamente el entorno de base de datos.");
-  process.exit(1); 
+  process.exit(1);
 }
 
 // Crear el pool de conexiones
-export const connection = mysql.createPool(selectedConfig).promise();
+export const connection = mysql.createPool(configDev).promise();
 
-// Validar la conexión
+// Validar la conexió
 connection
   .getConnection()
   .then(() =>
