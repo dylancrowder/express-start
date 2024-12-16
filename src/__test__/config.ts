@@ -1,10 +1,6 @@
 import { connection } from "../db/db_connect";
 
 beforeAll(async () => {
-  const variableENV: any = process.env.PROD_DB_USER
-  console.log(variableENV);
-  const variableGIT: any = process.env.DB_USER
-  console.log("git", variableGIT);
 
   await connection.query('DROP TABLE IF EXISTS ARTICLE');
   await connection.query(`
