@@ -136,7 +136,6 @@ export class ArticleController {
 
     try {
       const result: any = await ArticleModel.deleteByID(id);
-      console.log("este es el resultado", result);
 
       if (result.affectedRows === 0) {
         return next(
@@ -149,7 +148,7 @@ export class ArticleController {
         );
       }
 
-      res.status(201).json(result); // Solo llegamos aquí si result.affectedRows > 0
+      res.status(201).json(result);
     } catch (error: any) {
       return next(
         new AppError(

@@ -6,7 +6,7 @@ dotenv.config();
 
 const configTest = {
   host: "localhost",
-  port: 3309,  // Asegúrate de usar el puerto correcto (3309)
+  port: 3309,
   user: "root",
   password: "12345",
   database: "db",
@@ -15,12 +15,14 @@ const configTest = {
   queueLimit: 0,
 };
 
+
+
 const configDev = {
-  host: "my_mysql",
+  host: process.env.PROD_DB_HOST,
   port: 3306,
-  user: "root",
-  password: "12345",
-  database: "db",
+  user: process.env.PROD_DB_USER,
+  password: process.env.PROD_DB_PASSWORD,
+  database: process.env.PROD_DB_NAME,
 };
 
 // Selección dinámica según el entorno
