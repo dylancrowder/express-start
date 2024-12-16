@@ -16,6 +16,6 @@ process.on("uncaughtException", (err) => {
 });
 
 process.on("unhandledRejection", (reason) => {
-  logger.error({ reason }, "Promesa no manejada");
+  logger.error({ reason }, "Promesa no manejadas");
   process.exit(1);
 });
