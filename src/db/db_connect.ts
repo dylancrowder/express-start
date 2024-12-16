@@ -5,11 +5,11 @@ import logger from "../utilities/pino.logger";
 dotenv.config();
 
 const configTest = {
-  host: "localhost",
-  port: 3309,
-  user: "root",
-  password: "12345",
-  database: "db",
+  host: process.env.PROD_DB_HOST,
+  port: 3306,
+  user: process.env.PROD_DB_USER,
+  password: process.env.PROD_DB_PASSWORD,
+  database: process.env.PROD_DB_NAME,
   waitForConnections: true,
   connectionLimit: 5,
   queueLimit: 0,
