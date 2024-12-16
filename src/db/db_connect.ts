@@ -5,6 +5,17 @@ import logger from "../utilities/pino.logger";
 dotenv.config();
 
 const configTest = {
+  host: "sql10.freemysqlhosting.net",
+  port: 3306,
+  user: "sql10751906",
+  password: "aeutGJMA2C",
+  database: "sql10751906",
+  waitForConnections: true,
+  connectionLimit: 5,
+  queueLimit: 0,
+};
+
+/* const configTest = {
   host: process.env.PROD_DB_HOST,
   port: 3306,
   user: process.env.PROD_DB_USER,
@@ -13,8 +24,7 @@ const configTest = {
   waitForConnections: true,
   connectionLimit: 5,
   queueLimit: 0,
-};
-
+}; */
 
 
 
