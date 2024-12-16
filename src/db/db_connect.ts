@@ -63,11 +63,11 @@ if (enviroment === "test") {
 // Si no se seleccionó ninguna configuración, puedes hacer un chequeo
 if (!selectedConfig) {
   console.log("No se ha configurado correctamente el entorno de base de datos.");
-  process.exit(1);
+  process.exit(1); 
 }
 
 // Crear el pool de conexiones
-export const connection = mysql.createPool(configDev).promise();
+export const connection = mysql.createPool(configProd).promise();
 
 // Validar la conexió
 connection
