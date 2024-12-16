@@ -7,7 +7,7 @@ dotenv.config();
 // Configuración de la base de datos usando variables de entorno
 const configTest = {
   host: "localhost",
-  port: 3309,  // Asegúrate de usar el puerto correcto (3309)
+  port: 3309, 
   user: "root",
   password: "12345",
   database: "db",
@@ -15,6 +15,7 @@ const configTest = {
   connectionLimit: 5,
   queueLimit: 0,
 };
+
 
 /* const configTest = {
   host: process.env.PROD_DB_HOST,
