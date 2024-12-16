@@ -1,7 +1,8 @@
 import { connection } from "../db/db_connect";
 
 beforeAll(async () => {
-  await connection.query('DROP TABLE IF EXISTS ARTICLE'); 
+
+  await connection.query('DROP TABLE IF EXISTS ARTICLE');
   await connection.query(`
     CREATE TABLE ARTICLE (
       ID SERIAL PRIMARY KEY,
@@ -14,5 +15,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+
+  
   await connection.end();
 });
