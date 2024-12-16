@@ -18,13 +18,18 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'  # Especifica la versión de Node.js que estés utilizando
+          node-version: '22'  # Especifica la versión de Node.js que estés utilizando
 
       # Paso 3: Instalar las dependencias
       - name: Install dependencies
         run: |
           npm install  # O el comando para instalar las dependencias, dependiendo de tu proyecto
 
+      - name: Set up environment variables for database
+        run: |
+          echo "DB_HOST=${{ secrets.DB_HOST }}" >> $GITHUB_ENV
+          echo "DB_USER=${{ secrets.DB_USER }}" >> $GITHUB_ENV
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV    
       # Paso 4: Ejecutar los tests
       - name: Run tests
         run: |
