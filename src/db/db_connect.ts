@@ -14,8 +14,17 @@ const configTest = {
   connectionLimit: 5,
   queueLimit: 0,
 };
-
-
+/* const configTest = {
+  host: process.env.TEST_DB_HOST,
+  port: 3309,
+  user: process.env.TEST_DB_USER,
+  password: process.env.TEST_DB_PASSWORD,
+  database: process.env.TEST_DB_NAME,
+  waitForConnections: true,
+  connectionLimit: 5,
+  queueLimit: 0,
+};
+ */
 
 const configDev = {
   host: process.env.PROD_DB_HOST,
