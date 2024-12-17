@@ -2,8 +2,8 @@ import { connection } from "../db/db_connect";
 
 beforeAll(async () => {
 
+  console.log("ESTA ES LA VARIABLE DE ENV", process.env.NODE_ENV);
   await connection.query('DROP TABLE IF EXISTS ARTICLE');
-  console.log("DB SECRETS" , process.env.DB_HOST);
   
   await connection.query(`
     CREATE TABLE ARTICLE (

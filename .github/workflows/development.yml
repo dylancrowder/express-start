@@ -33,6 +33,8 @@ jobs:
 
       # Paso 4: Ejecutar los tests
       - name: Run tests
+        env:
+          NODE_ENV: test
         run: |
           npm test  # O el comando para correr los tests en tu proyecto
 
