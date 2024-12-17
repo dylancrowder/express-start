@@ -3,6 +3,8 @@ import { connection } from "../db/db_connect";
 beforeAll(async () => {
 
   await connection.query('DROP TABLE IF EXISTS ARTICLE');
+  console.log("DB SECRETS" , process.env.DB_HOST);
+  
   await connection.query(`
     CREATE TABLE ARTICLE (
       ID SERIAL PRIMARY KEY,
