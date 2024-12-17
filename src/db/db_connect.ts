@@ -37,13 +37,15 @@ const configProd = {
 const git = {
 
 
-  host: "sql10.freemysqlhosting.net",
+  host: process.env.DB_HOST,
   port: 3306,
-  user: "sql10751906",
-  password: "aeutGJMA2C",
-  database: "sql10751906",
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 
 }
+console.log(git);
+
 const enviroment = process.env.NODE_ENV;
 
 let selectedConfig;
