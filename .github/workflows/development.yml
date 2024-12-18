@@ -9,7 +9,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      # Variables de entorno para los tests
       DB_HOST: ${{ secrets.DB_HOST }}
       DB_NAME: ${{ secrets.DB_NAME }}
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
@@ -76,10 +75,9 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          IMAGE_NAME="miusuario/miproyecto"  # Reemplaza con tu usuario y nombre del contenedor
-          TAG="latest"  # Cambia por un tag dinámico si lo prefieres (ejemplo: usando el hash de commit)
-          docker build -t $IMAGE_NAME:$TAG .
-          docker push $IMAGE_NAME:$TAG
+          docker-compose --version  # Verificar versión de Docker Compose
+          docker-compose -f "docker-compose.v1.yml" up -d --build  # Usando docker-compose con guion
+          docker-compose push  # Asegúrate de que esto funcione si tienes Docker Compose v1
 
       # Paso 7: Desplegar a Render
       - name: Trigger Render Deploy
