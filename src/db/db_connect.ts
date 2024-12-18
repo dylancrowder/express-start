@@ -4,7 +4,6 @@ import logger from "../utilities/pino.logger";
 
 dotenv.config();
 
-
 const configTest = {
   host: "localhost",
   port: 3309,
@@ -32,27 +31,31 @@ const configProd = {
   database: process.env.PROD_DB_NAME,
 };
 
-
 const git = {
   host: process.env.DB_HOST,
   port: 3306,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-}
+};
 
 const enviroment = process.env.NODE_ENV;
 
 let selectedConfig;
 
-if (enviroment === "test") {
-  selectedConfig = configTest;
-} else if (enviroment === "production") {
-  selectedConfig = configProd;
-} else if (enviroment === "development") {
-  selectedConfig = configDev;
-} else {
-  console.log("enviroment no válido");
+switch (enviroment) {
+  case "test":
+    selectedConfig = git;
+    break;
+  case "production":
+    selectedConfig = configProd;
+    break;
+  case "development":
+    selectedConfig = configDev;
+    break;
+  default:
+    console.log("Entorno no válido");
+    process.exit(1); 
 }
 
 if (!selectedConfig) {
@@ -61,9 +64,9 @@ if (!selectedConfig) {
 }
 
 // Crear el pool de conexiones
-export const connection = mysql.createPool(configProd).promise();
+export const connection = mysql.createPool(selectedConfig).promise();
 
-// Validar la conexió
+// Validar la conexión
 connection
   .getConnection()
   .then(() =>
