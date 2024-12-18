@@ -51,7 +51,7 @@ switch (enviroment) {
     selectedConfig = configProd;
     break;
   case "development":
-    selectedConfig = configDev;
+    selectedConfig = configProd;
     break;
   default:
     console.log("Entorno no válido");
