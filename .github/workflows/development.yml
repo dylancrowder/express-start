@@ -18,6 +18,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Set up Docker Compose
+        run: |
+          # Crear el archivo .env
+          echo "DEV_DB_HOST=my_mysql" >> .env
+          echo "DEV_DB_PORT=3308" >> .env
+          echo "DEV_DB_USER=root" >> .env
+          echo "DEV_DB_PASSWORD=12345" >> .env
+          echo "TEST_DB_HOST=localhost" >> .env
+          echo "TEST_DB_PORT=3309" >> .env
+          echo "TEST_DB_USER=root" >> .env
+          echo "TEST_DB_PASSWORD=12345" >> .env
+          echo "PROD_DB_PASSWORD=aeutGJMA2C" >> .env
+          echo "PROD_DB_USER=sql10751906" >> .env
+          echo "PROD_DB_PORT=3306" >> .env
+          echo "PROD_DB_HOST=sql10.freemysqlhosting.net" >> .env
+          echo "APP_PORT= 8090" >> .env
+          echo "TEST_DB_NAME=db" >> .env
+          echo "PROD_DB_NAME=sql10751906" >> .env
+        
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
