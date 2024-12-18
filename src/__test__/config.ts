@@ -17,7 +17,5 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-
-  
   await connection.end();
 });
