@@ -33,7 +33,6 @@ const configProd = {
 };
 
 
-
 const git = {
   host: process.env.DB_HOST,
   port: 3306,
@@ -62,7 +61,7 @@ if (!selectedConfig) {
 }
 
 // Crear el pool de conexiones
-export const connection = mysql.createPool(git).promise();
+export const connection = mysql.createPool(configProd).promise();
 
 // Validar la conexió
 connection
