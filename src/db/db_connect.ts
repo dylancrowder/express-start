@@ -15,18 +15,53 @@ const configTest = {
   queueLimit: 0,
 };
 
-
-
 const configDev = {
-  host: process.env.PROD_DB_HOST,
+  host: "my_mysql",
   port: 3306,
+  user: "root",
+  password: "12345",
+  database: "db",
+};
+
+const configProd = {
+  host: process.env.PROD_DB_HOST,
+  port: process.env.PROD_DB_PORT ? Number(process.env.PROD_DB_PORT) : undefined,
   user: process.env.PROD_DB_USER,
   password: process.env.PROD_DB_PASSWORD,
   database: process.env.PROD_DB_NAME,
 };
 
-// Selección dinámica según el entorno
-const selectedConfig = process.env.NODE_ENV === "test" ? configTest : configDev;
+const git = {
+  host: process.env.DB_HOST,
+  port: 3306,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+};
+
+const enviroment = process.env.NODE_ENV;
+
+let selectedConfig;
+
+switch (enviroment) {
+  case "test":
+    selectedConfig = git;
+    break;
+  case "production":
+    selectedConfig = configProd;
+    break;
+  case "development":
+    selectedConfig = configProd;
+    break;
+  default:
+    console.log("Entorno no válido");
+    process.exit(1); 
+}
+
+if (!selectedConfig) {
+  console.log("No se ha configurado correctamente el entorno de base de datos.");
+  process.exit(1);
+}
 
 // Crear el pool de conexiones
 export const connection = mysql.createPool(selectedConfig).promise();
@@ -36,8 +71,7 @@ connection
   .getConnection()
   .then(() =>
     logger.info(
-      `Database connection established in ${process.env.NODE_ENV || "development"
-      } mode`
+      `Database connection established in ${process.env.NODE_ENV || "development"} mode`
     )
   )
   .catch((err) => logger.error(err));
