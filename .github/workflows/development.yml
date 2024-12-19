@@ -18,6 +18,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Print current directory
+        run: |
+          echo "Current directory: $(pwd)"
+
+      - name: List files in the workspace
+        run: |
+          ls -la
+
       - name: Set up Docker Compose
         run: |
           # Crear el archivo .env
@@ -36,7 +44,6 @@ jobs:
           echo "APP_PORT= 8090" >> .env
           echo "TEST_DB_NAME=db" >> .env
           echo "PROD_DB_NAME=sql10751906" >> .env
-        
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -60,6 +67,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Print current directory (merge job)
+        run: |
+          echo "Current directory: $(pwd)"
+
+      - name: List files in the workspace (merge job)
+        run: |
+          ls -la
 
       - name: Set up Git
         run: |
@@ -112,3 +127,13 @@ jobs:
             -H "Content-Type: application/json" \
             -d '{"serviceId": "${{ secrets.RENDER_SERVICE_ID }}", "clearCache": false}' \
             https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys
+
+      # Paso 9: Verificar si el archivo docker-compose.yml está presente
+      - name: Check for docker-compose.yml
+        run: |
+          if [ -f docker-compose.yml ]; then
+            echo "docker-compose.yml exists"
+          else
+            echo "docker-compose.yml not found"
+            exit 1
+          fi
