@@ -23,4 +23,4 @@ EXPOSE 8090
 USER node
 
 # Define el comando por defecto para iniciar la aplicación
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "dev"]

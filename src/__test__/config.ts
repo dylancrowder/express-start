@@ -1,7 +1,10 @@
 import { connection } from "../db/db_connect";
 
 beforeAll(async () => {
-  await connection.query('DROP TABLE IF EXISTS ARTICLE'); 
+
+  console.log("ESTA ES LA VARIABLE DE ENV", process.env.NODE_ENV);
+  await connection.query('DROP TABLE IF EXISTS ARTICLE');
+  
   await connection.query(`
     CREATE TABLE ARTICLE (
       ID SERIAL PRIMARY KEY,
