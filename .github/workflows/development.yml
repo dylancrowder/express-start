@@ -88,5 +88,5 @@ jobs:
       # Paso 8: Desplegar a Render
       - name: Trigger Render Deploy
         run: |
-         curl -X POST "https://api.render.com/deploy/srv-ctg7dld2ng1s73bdfnng?key=${{ secrets.RENDER_API_KEY }}"
+         curl -X GET "https://api.render.com/deploy/srv-ctg7dld2ng1s73bdfnng?key=qat_eK9zyCQ"
     
