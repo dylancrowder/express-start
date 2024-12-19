@@ -18,33 +18,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Print current directory
-        run: |
-          echo "Current directory: $(pwd)"
-
-      - name: List files in the workspace
-        run: |
-          ls -la
-
-      - name: Set up Docker Compose
-        run: |
-          # Crear el archivo .env
-          echo "DEV_DB_HOST=my_mysql" >> .env
-          echo "DEV_DB_PORT=3308" >> .env
-          echo "DEV_DB_USER=root" >> .env
-          echo "DEV_DB_PASSWORD=12345" >> .env
-          echo "TEST_DB_HOST=localhost" >> .env
-          echo "TEST_DB_PORT=3309" >> .env
-          echo "TEST_DB_USER=root" >> .env
-          echo "TEST_DB_PASSWORD=12345" >> .env
-          echo "PROD_DB_PASSWORD=aeutGJMA2C" >> .env
-          echo "PROD_DB_USER=sql10751906" >> .env
-          echo "PROD_DB_PORT=3306" >> .env
-          echo "PROD_DB_HOST=sql10.freemysqlhosting.net" >> .env
-          echo "APP_PORT= 8090" >> .env
-          echo "TEST_DB_NAME=db" >> .env
-          echo "PROD_DB_NAME=sql10751906" >> .env
-
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -67,14 +40,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      - name: Print current directory (merge job)
-        run: |
-          echo "Current directory: $(pwd)"
-
-      - name: List files in the workspace (merge job)
-        run: |
-          ls -la
 
       - name: Set up Git
         run: |
@@ -126,14 +91,55 @@ jobs:
           curl -X POST -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
             -H "Content-Type: application/json" \
             -d '{"serviceId": "${{ secrets.RENDER_SERVICE_ID }}", "clearCache": false}' \
-            https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys
+            https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploy
 
-      # Paso 9: Verificar si el archivo docker-compose.yml está presente
-      - name: Check for docker-compose.yml
-        run: |
-          if [ -f docker-compose.yml ]; then
-            echo "docker-compose.yml exists"
-          else
-            echo "docker-compose.yml not found"
-            exit 1
-          fi
+services:
+  app:
+    build: .
+    container_name: my_node_app
+    ports:
+      - "8090:8090"
+    environment:
+      - DB_HOST=${{ secrets.DB_HOST }}
+      - DB_NAME=${{ secrets.DB_NAME }}
+      - DB_USER=${{ secrets.DB_USER }}
+      - DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+      - APP_PORT=8090
+    volumes:
+      - ./:/myapp
+      - node_modules_cache:/myapp/node_modules
+    networks:
+      - mynetwork
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - mynetwork
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3001:3000"
+    networks:
+      - mynetwork
+
+  nodeexporter:
+    image: prom/node-exporter:latest
+    container_name: nodeexporter
+    ports:
+      - "9100:9100"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  node_modules_cache: {}

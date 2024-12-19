@@ -6,8 +6,12 @@ services:
     container_name: my_node_app
     ports:
       - "8090:8090"
-    env_file:
-      - .env
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - APP_PORT=8090  # Puedes agregar más variables de entorno si es necesario
     volumes:
       - ./:/myapp
       - node_modules_cache:/myapp/node_modules
