@@ -50,10 +50,10 @@ jobs:
 
       - name: Install Docker Compose
         run: |
-          sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-          sudo chmod +x /usr/local/bin/docker-compose
-          docker-compose --version  # Verifica que Docker Compose está correctamente instalado
-
+            sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            sudo chmod +x /usr/local/bin/docker-compose
+            docker-compose --version  # Verifica que Docker Compose está correctamente instalado
+        
       # Paso 2: Log in to Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
@@ -61,15 +61,16 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Paso 3: Construir la imagen Docker
+    # Paso 3: Construir la imagen Docker
       - name: Build Docker image
         run: |
-          docker-compose -f "docker-compose.yml" up -d --build
-
-      # Paso 4: Subir la imagen Docker a Docker Hub
+              docker build -t dylanrojo/express-start-app:latest .
+  
+    # Paso 4: Subir la imagen Docker a Docker Hub
       - name: Push Docker image to Docker Hub
         run: |
-          docker-compose push
+              docker push dylanrojo/express-start-app:latest
+
 
       # Paso 5: Desplegar en Render
       - name: Trigger Render Deploy
