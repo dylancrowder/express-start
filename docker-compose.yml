@@ -1,22 +1,20 @@
-version: "3.8"
-
 services:
   app:
     build: .
     container_name: my_node_app
     ports:
       - "8090:8090"
-    environment:
-      - DB_HOST=${DB_HOST}
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - APP_PORT=8090 
+    env_file:
+      - .env.production
     volumes:
-      - ./:/myapp
+      - ./src:/myapp/src
+      - ./package.json:/myapp/package.json
       - node_modules_cache:/myapp/node_modules
+
     networks:
       - mynetwork
+    depends_on:
+      - mysql-prod
 
   prometheus:
     image: prom/prometheus:latest
@@ -44,9 +42,35 @@ services:
     networks:
       - mynetwork
 
+  mysql-dev:
+    image: mysql:8.0
+    container_name: mysql-dev-container
+    env_file:
+      - .env.development
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-dev-data:/var/lib/mysql
+    networks:
+      - mynetwork
+
+  mysql-prod:
+    image: mysql:8.0
+    container_name: mysql-prod-container
+    env_file:
+      - .env.production
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql-prod-data:/var/lib/mysql
+    networks:
+      - mynetwork
+
 networks:
   mynetwork:
     driver: bridge
 
 volumes:
   node_modules_cache: {}
+  mysql-dev-data: {}
+  mysql-prod-data: {}

@@ -1,5 +1,5 @@
 # Usa la imagen base de Node.js
-FROM node:18
+FROM node:20
 
 # Establece el directorio de trabajo
 WORKDIR /myapp
@@ -23,4 +23,4 @@ EXPOSE 8090
 USER node
 
 # Define el comando por defecto para iniciar la aplicación
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "start"]
