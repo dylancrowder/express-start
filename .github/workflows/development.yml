@@ -42,7 +42,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Paso 1: Instalar Docker y Docker Compose
+      # Instalar Docker y Docker Compose
       - name: Set up Docker
         uses: docker/setup-buildx-action@v2
         with:
@@ -53,26 +53,30 @@ jobs:
             sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
             sudo chmod +x /usr/local/bin/docker-compose
             docker-compose --version  # Verifica que Docker Compose está correctamente instalado
-        
-      # Paso 2: Log in to Docker Hub
+
+      # Log in to Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-    # Paso 3: Construir la imagen Docker
+      # Construir la imagen Docker
       - name: Build Docker image
         run: |
-              docker build -t dylanrojo/express-start-app:latest .
-  
-    # Paso 4: Subir la imagen Docker a Docker Hub
+          docker build \
+            --build-arg DB_HOST=${{ secrets.DB_HOST }} \
+            --build-arg DB_NAME=${{ secrets.DB_NAME }} \
+            --build-arg DB_USER=${{ secrets.DB_USER }} \
+            --build-arg DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+            -t dylanrojo/express-start-app:latest .
+
+      # Subir la imagen Docker a Docker Hub
       - name: Push Docker image to Docker Hub
         run: |
-              docker push dylanrojo/express-start-app:latest
+          docker push dylanrojo/express-start-app:latest
 
-
-      # Paso 5: Desplegar en Render
+      # Desplegar en Render
       - name: Trigger Render Deploy
         run: |
           curl -X GET "https://api.render.com/deploy/srv-ctg7dld2ng1s73bdfnng?key=qat_eK9zyCQ"

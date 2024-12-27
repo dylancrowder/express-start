@@ -4,6 +4,18 @@ FROM node:20
 # Establece el directorio de trabajo
 WORKDIR /myapp
 
+# Acepta argumentos de construcción para las variables de entorno
+ARG DB_HOST
+ARG DB_NAME
+ARG DB_USER
+ARG DB_PASSWORD
+
+# Configura las variables de entorno
+ENV DB_HOST=$DB_HOST
+ENV DB_NAME=$DB_NAME
+ENV DB_USER=$DB_USER
+ENV DB_PASSWORD=$DB_PASSWORD
+
 # Copia los archivos de dependencias (package.json y package-lock.json)
 COPY package*.json ./
 

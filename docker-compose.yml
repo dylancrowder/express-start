@@ -2,12 +2,22 @@ version: '3.8'
 
 services: 
   app:
-    build: .
+    build:
+      context: .
+      args:
+        DB_HOST: ${DB_HOST}
+        DB_NAME: ${DB_NAME}
+        DB_USER: ${DB_USER}
+        DB_PASSWORD: ${DB_PASSWORD}
     container_name: my_node_app
     ports:
       - "8090:8090"
-    env_file:
-      - .env.production
+    environment:
+      NODE_ENV: production
+      DB_HOST: ${DB_HOST}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ./src:/myapp/src
       - ./package.json:/myapp/package.json
