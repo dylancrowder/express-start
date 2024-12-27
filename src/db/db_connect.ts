@@ -13,9 +13,12 @@ const dbConfig = {
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  port: parseInt(process.env.DB_PORT || "3307", 10),
+  port: parseInt(process.env.DB_PORT || "3306", 10),
   charset: "utf8mb4",
 };
+
+
+console.log("esta es la base de datos", dbConfig);
 
 // Validar configuración de la base de datos
 if (!dbConfig.host || !dbConfig.user || !dbConfig.password || !dbConfig.database) {
