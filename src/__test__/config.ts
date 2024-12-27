@@ -1,20 +1,16 @@
 import { connection } from "../db/db_connect";
-
-beforeAll(async () => {
-
-  await connection.query('DROP TABLE IF EXISTS ARTICLE');
-  
-  await connection.query(`
-    CREATE TABLE ARTICLE (
-      ID SERIAL PRIMARY KEY,
-      NOMBRE VARCHAR(80) NOT NULL,
-      MARCA VARCHAR(80) NOT NULL,
-      ESTADO BOOLEAN NOT NULL DEFAULT TRUE,
-      FECHA_MODIFICACION TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-    );
-  `);
-});
-
+// En el test:
 afterAll(async () => {
-  await connection.end();
+  try {
+    if (connection) {
+      console.log("Cerrando el pool de conexiones...");
+      await connection.end(); // Debería funcionar si es un pool directo
+      console.log("Pool cerrado correctamente.");
+    }
+  } catch (err) {
+    console.error("Error al cerrar el pool:", err);
+  }
 });
+
+
+//HACER UNA CONEXION SEPARADA DE LA BASE DE DATOS APARTE DE LA APP 

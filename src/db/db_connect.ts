@@ -15,6 +15,7 @@ const db: any = {
   port: parseInt(process.env.DB_PORT || "3307", 10),
 }
 
+
 if (!db) {
   console.log("No se ha configurado correctamente el entorno de base de datos.");
   process.exit(1);

@@ -10,7 +10,7 @@ dotenv.config({
 const PORT = process.env.APP_PORT;
 
 app.listen(PORT, () => {
-  logger.info(`Servidor corriendo en el puerto: ${PORT} ${process.env.NODE_ENV} ${process.env.DB_PASSWORD} `);
+  logger.info(`Servidor corriendo en el puerto: ${PORT} ${process.env.NODE_ENV}`);
 });
 
 process.on("uncaughtException", (err) => {
