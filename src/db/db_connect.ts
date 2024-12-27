@@ -17,9 +17,6 @@ const dbConfig = {
   charset: "utf8mb4",
 };
 
-
-console.log("esta es la base de datos", dbConfig);
-
 // Validar configuración de la base de datos
 if (!dbConfig.host || !dbConfig.user || !dbConfig.password || !dbConfig.database) {
   logger.error("Faltan variables de entorno para configurar la base de datos.");
