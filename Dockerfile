@@ -16,6 +16,9 @@ ENV DB_NAME=$DB_NAME
 ENV DB_USER=$DB_USER
 ENV DB_PASSWORD=$DB_PASSWORD
 
+# Establece el entorno de Node.js como producción
+ENV NODE_ENV=production
+
 # Copia los archivos de dependencias (package.json y package-lock.json)
 COPY package*.json ./ 
 
