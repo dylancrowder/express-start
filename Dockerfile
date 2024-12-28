@@ -16,9 +16,6 @@ ENV DB_NAME=$DB_NAME
 ENV DB_USER=$DB_USER
 ENV DB_PASSWORD=$DB_PASSWORD
 
-# Establece el entorno de Node.js como producción
-ENV NODE_ENV=production
-
 # Copia los archivos de dependencias (package.json y package-lock.json)
 COPY package*.json ./ 
 
@@ -38,4 +35,4 @@ EXPOSE 8090
 USER node
 
 # Define el comando por defecto para iniciar la aplicación con PM2
-CMD ["pm2-runtime", "start", "dist/server.js", "--name", "my_node_app"]
+CMD ["pm2-runtime","NODE_ENV=production" ,"start", "dist/server.js", "--name", "my_node_app" ]
