@@ -28,6 +28,7 @@ services:
       - prometheus
       - grafana
       - nodeexporter
+    restart: always  # Esto asegura que el contenedor se reinicie si falla
 
   prometheus:
     image: prom/prometheus:latest
