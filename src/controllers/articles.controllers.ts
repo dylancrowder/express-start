@@ -67,6 +67,9 @@ export class ArticleController {
   static async findByID(req: Request, res: Response, next: NextFunction) {
     const { id } = req.body;
 
+
+    console.log("esto es lo que me trae el controller", id);
+    
     const { error } = queryID.validate(req.body);
     if (error) {
       return next(
@@ -122,6 +125,7 @@ export class ArticleController {
   static async deleteByID(req: Request, res: Response, next: NextFunction) {
     const { id } = req.body;
 
+    
     const { error } = queryID.validate(req.body);
     if (error) {
       return next(

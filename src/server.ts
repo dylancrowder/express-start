@@ -2,9 +2,12 @@ import app from "./app";
 import dotenv from "dotenv";
 import logger from "./utilities/pino.logger";
 
-dotenv.config();
+dotenv.config({
+  path: `.env.${process.env.NODE_ENV}`
+});
 
-const PORT = /*  process.env.APP_PORT || */ 8090;
+
+const PORT = process.env.APP_PORT;
 
 app.listen(PORT, () => {
   logger.info(`Servidor corriendo en el puerto: ${PORT} ${process.env.NODE_ENV}`);

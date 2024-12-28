@@ -1,0 +1,64 @@
+version: '3.8'
+
+services: 
+  app:
+    build:
+      context: .
+      args:
+        DB_HOST: ${DB_HOST}
+        DB_NAME: ${DB_NAME}
+        DB_USER: ${DB_USER}
+        DB_PASSWORD: ${DB_PASSWORD}
+    container_name: my_node_app
+    ports:
+      - "8090:8090"
+    environment:
+      NODE_ENV: production
+      DB_HOST: ${DB_HOST}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./src:/myapp/src
+      - ./package.json:/myapp/package.json
+      - node_modules_cache:/myapp/node_modules
+    networks:
+      - mynetwork
+    depends_on:
+      - prometheus
+      - grafana
+      - nodeexporter
+    restart: always  # Esto asegura que el contenedor se reinicie si falla
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - mynetwork
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3001:3000"
+    networks:
+      - mynetwork
+
+  nodeexporter:
+    image: prom/node-exporter:latest
+    container_name: nodeexporter
+    ports:
+      - "9100:9100"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  node_modules_cache: {}

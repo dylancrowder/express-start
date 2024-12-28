@@ -1,9 +1,5 @@
-//(PK)
-// Nombre
-// Fecha de modificación
-// Marca
-// Estado de activación.
 
+//tipado
 export interface Article {
   ID: number;
   NOMBRE: string;
